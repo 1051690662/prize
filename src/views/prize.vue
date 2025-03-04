@@ -6,8 +6,8 @@
     </el-col>
   </el-row>
 
-  <el-row :gutter="20" >
-    <el-col :span="10">
+  <el-row :gutter="24" >
+    <el-col :span="14">
        <el-table :data="tableData" :show-header="false" border>
     <el-table-column label="" :spn="2"
                      v-for="(row, rowIndex) in tableData"
@@ -24,11 +24,11 @@
     </el-table-column>
   </el-table>
     </el-col>
-    <el-col :span="4">
+    <el-col :span="3">
     <h1 >中奖分：</h1>
      <p style="color: red; font-size: 50px;">{{cent}}</p>
       <p style="color: red; font-size: 50px;">{{prize_name}}</p>
-<el-button @click="getPrize" type="primary">抽奖</el-button>
+<el-button :disabled="button_f" @click="getPrize" type="primary">抽奖</el-button>
     </el-col>
 
   </el-row>
@@ -63,7 +63,7 @@ import turtlePic6 from '@/assets/6.png';
 import turtlePic7 from '@/assets/7.png';
 
 
-
+const button_f=ref(false)
 const widthtble = ref(100)
 const pic_list_all = [turtlePic0, turtlePic1, turtlePic2, turtlePic3, turtlePic4, turtlePic5, turtlePic6, turtlePic7]
 const pic_list = pic_list_all.slice(0,5)
@@ -451,7 +451,8 @@ const lastPrizeTimes=async (record_data)=>{
 }
 const getPrize=async ()=>{
   console.log("连续不中奖",last_no_prize_times)
-  let delay=50
+  button_f.value=true
+  let delay=100
   await init()
   await start()
   await stop(delay)
@@ -461,6 +462,7 @@ const getPrize=async ()=>{
   await lastPrizeTimes(record_data)
   console.log(record_data)
   await bigPrize()
+  button_f.value=false
 
 
 }
